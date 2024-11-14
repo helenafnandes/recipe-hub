@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { RecipeModule } from './recipes/recipe.module';
+import { Recipe } from './recipes/recipe.entity';
+
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -13,9 +16,11 @@ dotenv.config();
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [/**/],
+      entities: [Recipe],
       synchronize: true, // dev
-    }),
+      schema: 'recipes', // Esquema onde as tabelas serão criadas
+    }),    
+    RecipeModule,
   ],
   controllers: [],
   providers: [],
