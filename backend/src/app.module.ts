@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
 
-import { RecipeModule } from './recipes/recipe.module';
-import { Recipe } from './recipes/recipe.entity';
+import { RecipeModule } from './recipe/recipe.module';
+import { Recipe } from './recipe/recipe.entity';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -17,10 +20,17 @@ dotenv.config();
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [Recipe],
+      autoLoadEntities: true,
       synchronize: true, // dev
-      schema: 'recipes', // Esquema onde as tabelas serão criadas
-    }),    
+      schema: 'recipes',
+    }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60s' },
+    }),
     RecipeModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
