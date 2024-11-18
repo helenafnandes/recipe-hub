@@ -15,7 +15,7 @@ export class UserService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     const { username, password } = createUserDto;
 
-    // Check if username is unique
+    // check if username is unique
     const existingUser = await this.userRepository.findOne({
       where: { username },
     });
@@ -23,7 +23,7 @@ export class UserService {
       throw new ConflictException('Username is already taken.');
     }
 
-    // Hash password and save user
+    // hash password and save user
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = this.userRepository.create({
       username,
