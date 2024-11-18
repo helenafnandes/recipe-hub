@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 
@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
 import * as dotenv from 'dotenv';
+import { APP_PIPE } from '@nestjs/core';
 dotenv.config();
 
 @Module({
@@ -22,6 +23,7 @@ dotenv.config();
       entities: [Recipe],
       autoLoadEntities: true,
       synchronize: true, // dev
+      //dropSchema: true, // dev
       schema: 'recipes',
     }),
     JwtModule.register({
@@ -33,6 +35,15 @@ dotenv.config();
     UserModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    },
+  ],
 })
 export class AppModule {}
