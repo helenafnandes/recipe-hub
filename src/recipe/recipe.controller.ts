@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, UseGuards, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  NotFoundException,
+} from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { Recipe } from './recipe.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateRecipeDto } from './dto/create-recipe.dto';
 
 @Controller('recipes')
 export class RecipeController {
@@ -19,10 +27,7 @@ export class RecipeController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  async create(@Body() recipe: Partial<Recipe>): Promise<Recipe> {
-    if (!recipe.name || !recipe.description) {
-      throw new BadRequestException('Recipe title and ingredients are required');
-    }
-    return this.recipeService.create(recipe);
+  async create(@Body() createRecipeDto: CreateRecipeDto): Promise<Recipe> {
+    return this.recipeService.create(createRecipeDto);
   }
 }
