@@ -30,8 +30,9 @@ export class RecipeController {
     @Query('category') category?: number,
     @Query('page') page = 1,
     @Query('limit') limit = 10,
+    @Query('search') search?: string,
   ): Promise<Recipe[]> {
-    return this.recipeService.findAll({ category, page, limit });
+    return this.recipeService.findAll({ category, page, limit, search });
   }
 
   @Post()

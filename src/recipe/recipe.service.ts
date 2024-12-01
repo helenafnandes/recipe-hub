@@ -15,7 +15,6 @@ export class RecipeService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-
   async findAll(filters: { category?: number; page: number; limit: number; search?: string }): Promise<Recipe[]> {
     const { category, page, limit, search } = filters;
     const query = this.recipeRepository.createQueryBuilder('recipe');
@@ -31,7 +30,6 @@ export class RecipeService {
     query.skip((page - 1) * limit).take(limit);
     return query.getMany();
   }
-
 
   // Cria uma nova receita
   async create(createRecipeDto: CreateRecipeDto, userId: string): Promise<Recipe> {
