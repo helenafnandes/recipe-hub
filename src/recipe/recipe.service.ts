@@ -12,22 +12,26 @@ export class RecipeService {
     @InjectRepository(Recipe)
     private readonly recipeRepository: Repository<Recipe>,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>, // Repositório para User
+    private readonly userRepository: Repository<User>,
   ) {}
 
-  // Encontra todas as receitas com filtros de categoria, página e limite
-  async findAll(filters: { category?: number; page: number; limit: number }): Promise<Recipe[]> {
-    const { category, page, limit } = filters;
+
+  async findAll(filters: { category?: number; page: number; limit: number; search?: string }): Promise<Recipe[]> {
+    const { category, page, limit, search } = filters;
     const query = this.recipeRepository.createQueryBuilder('recipe');
 
     if (category) {
       query.andWhere('recipe.category = :category', { category });
     }
 
-    query.skip((page - 1) * limit).take(limit);
+    if (search) {
+      query.andWhere('recipe.name ILIKE :search', { search: `%${search}%` });
+    }
 
+    query.skip((page - 1) * limit).take(limit);
     return query.getMany();
   }
+
 
   // Cria uma nova receita
   async create(createRecipeDto: CreateRecipeDto, userId: string): Promise<Recipe> {
