@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsArray, IsString, ArrayMinSize, Min, Max } from 'class-validator';
+import { IsNotEmpty, IsArray, IsString, ArrayMinSize, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateRecipeDto {
   @IsNotEmpty()
@@ -14,10 +14,11 @@ export class CreateRecipeDto {
   @IsString()
   preparationMethod: string;
 
-  @Min(0)
-  @Max(5)
-  rating: number = 0;
+  @IsOptional()
+  @IsString()
+  image?: string;
 
-  @Min(0)
-  numberOfRatings: number = 0;
+  @IsNotEmpty()
+  @IsNumber()
+  category: number;
 }

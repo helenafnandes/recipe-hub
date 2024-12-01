@@ -3,9 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 
 import { RecipeModule } from './recipe/recipe.module';
-import { Recipe } from './recipe/recipe.entity';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { Recipe } from './recipe/recipe.entity';
+import { User } from './user/user.entity';
 
 import * as dotenv from 'dotenv';
 import { APP_PIPE } from '@nestjs/core';
@@ -20,11 +21,9 @@ dotenv.config();
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      entities: [Recipe],
+      entities: [Recipe, User],
       autoLoadEntities: true,
-      synchronize: true, // dev
-      //dropSchema: true, // dev
-      schema: 'recipes',
+      synchronize: true,
     }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,

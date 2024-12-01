@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, DeleteDateColumn } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Recipe {
@@ -8,7 +9,7 @@ export class Recipe {
   @Column()
   name: string;
 
-  @Column('simple-array') // comma-separated array
+  @Column('simple-array') // separado por vírgula
   ingredients: string[];
 
   @Column()
@@ -19,4 +20,16 @@ export class Recipe {
 
   @Column({ default: 0 })
   numberOfRatings: number;
+
+  @Column({ nullable: true })
+  image?: string;
+
+  @Column({ type: 'int', default: 0 }) // Ex.: 0 = "Outras", 1 = "Sobremesa", etc.
+  category: number;
+
+  @ManyToOne(() => User, (user) => user.recipes)
+  createdBy: User;
+
+  @DeleteDateColumn() // Soft-delete timestamp
+  deletedAt?: Date;
 }
