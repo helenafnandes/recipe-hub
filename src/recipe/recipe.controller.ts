@@ -35,6 +35,12 @@ export class RecipeController {
     return this.recipeService.findAll({ category, page, limit, search });
   }
 
+  @Get('user/:userId')
+  @ApiOperation({ summary: 'Get recipes by user ID' })
+  async findByUser(@Param('userId') userId: string): Promise<Recipe[]> {
+    return this.recipeService.findByUser(userId);
+  }
+
   @Post()
   @ApiOperation({ summary: 'Create a new recipe' })
   async create(

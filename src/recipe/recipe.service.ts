@@ -31,6 +31,10 @@ export class RecipeService {
     return query.getMany();
   }
 
+  async findByUser(userId: string): Promise<Recipe[]> {
+    return this.recipeRepository.find({ where: { createdBy: { id: userId } } });
+  }
+
   async create(createRecipeDto: CreateRecipeDto, userId: string): Promise<Recipe> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
