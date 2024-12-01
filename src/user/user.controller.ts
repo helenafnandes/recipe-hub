@@ -1,6 +1,12 @@
-import { Controller } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { createParamDecorator, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 
-@ApiTags('user')
-@Controller('user')
-export class UserController {}
+export const User = createParamDecorator(
+  (data: keyof Express.User | undefined, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    if (!request.user) {
+      throw new UnauthorizedException('Usuário não autenticado.');
+    }
+    console.log('Usuário autenticado extraído:', request.user); 
+    return data ? request.user[data] : request.user;
+  },
+);

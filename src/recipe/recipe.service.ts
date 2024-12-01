@@ -46,17 +46,16 @@ export class RecipeService {
   async create(createRecipeDto: CreateRecipeDto, userId: string): Promise<Recipe> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
-      throw new NotFoundException('User not found.');
+      throw new NotFoundException('Usuário não encontrado.');
     }
-
-    console.log('Usuário encontrado:', user);
+    console.log('Usuário encontrado no serviço:', user);
     const newRecipe = this.recipeRepository.create({
       ...createRecipeDto,
       createdBy: user,
     });
-
     return this.recipeRepository.save(newRecipe);
   }
+  
 
   async update(id: string, updateRecipeDto: UpdateRecipeDto, userId: string): Promise<Recipe> {
     const recipe = await this.recipeRepository.findOne({

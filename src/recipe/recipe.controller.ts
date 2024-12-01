@@ -51,11 +51,12 @@ export class RecipeController {
   @ApiOperation({ summary: 'Create a new recipe' })
   async create(
     @Body() createRecipeDto: CreateRecipeDto,
-    @User() user: UserEntity, 
+    @User() user: { userId: string }, 
   ): Promise<Recipe> {
-    console.log('Usuário autenticado no POST:', user);
-    return this.recipeService.create(createRecipeDto, user.id);
+    console.log('ID do usuário autenticado no POST:', user.userId); 
+    return this.recipeService.create(createRecipeDto, user.userId);
   }
+
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a recipe' })
