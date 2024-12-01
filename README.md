@@ -2,7 +2,8 @@
 
 Este projeto foi desenvolvido como parte de uma etapa seletiva com o objetivo de criar uma aplicação para gestão de receitas de cozinha. A aplicação inclui autenticação de usuários e fornece uma API back-end construída em **NestJS**, conectada a um banco de dados **PostgreSQL**.
 
-
+### Repositório Frontend
+- **Frontend**: [Catálogo de Receitas - Frontend](https://github.com/helenafnandes/recipe-hub-webclient)
 
 
 ## 🧾 Funcionalidades Principais
