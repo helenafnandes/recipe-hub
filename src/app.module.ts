@@ -24,7 +24,6 @@ dotenv.config();
       entities: [Recipe, User],
       autoLoadEntities: true,
       synchronize: true,
-      dropSchema: true
     }),
     JwtModule.register({
       secret: process.env.JWT_SECRET,

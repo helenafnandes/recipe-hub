@@ -30,6 +30,6 @@ export class Recipe {
   @ManyToOne(() => User, (user) => user.recipes)
   createdBy: User;
 
-  @DeleteDateColumn() // Soft-delete timestamp
+  @DeleteDateColumn() // soft-delete timestamp
   deletedAt?: Date;
 }

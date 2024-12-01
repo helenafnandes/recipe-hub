@@ -31,6 +31,14 @@ export class RecipeService {
     return query.getMany();
   }
 
+  async findOne(id: string): Promise<Recipe> {
+    const recipe = await this.recipeRepository.findOne({ where: { id } });
+    if (!recipe) {
+      throw new NotFoundException('Recipe not found.');
+    }
+    return recipe;
+  }
+
   async findByUser(userId: string): Promise<Recipe[]> {
     return this.recipeRepository.find({ where: { createdBy: { id: userId } } });
   }

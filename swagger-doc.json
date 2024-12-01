@@ -56,12 +56,12 @@
         ]
       }
     },
-    "/recipes/user/{userId}": {
+    "/recipes/{id}": {
       "get": {
-        "operationId": "RecipeController_findByUser",
+        "operationId": "RecipeController_findOne",
         "parameters": [
           {
-            "name": "userId",
+            "name": "id",
             "required": true,
             "in": "path",
             "schema": {
@@ -74,13 +74,11 @@
             "description": ""
           }
         },
-        "summary": "Get recipes by user ID",
+        "summary": "Get recipe by ID",
         "tags": [
           "recipes"
         ]
-      }
-    },
-    "/recipes/{id}": {
+      },
       "patch": {
         "operationId": "RecipeController_update",
         "parameters": [
@@ -131,6 +129,30 @@
           }
         },
         "summary": "Soft delete a recipe",
+        "tags": [
+          "recipes"
+        ]
+      }
+    },
+    "/recipes/user/{userId}": {
+      "get": {
+        "operationId": "RecipeController_findByUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get recipes by user ID",
         "tags": [
           "recipes"
         ]
