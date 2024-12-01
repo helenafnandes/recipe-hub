@@ -1,0 +1,247 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/recipes": {
+      "get": {
+        "operationId": "RecipeController_findAll",
+        "parameters": [
+          {
+            "name": "category",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get all recipes",
+        "tags": [
+          "recipes"
+        ]
+      },
+      "post": {
+        "operationId": "RecipeController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRecipeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Create a new recipe",
+        "tags": [
+          "recipes"
+        ]
+      }
+    },
+    "/recipes/{id}": {
+      "patch": {
+        "operationId": "RecipeController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRecipeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Update a recipe",
+        "tags": [
+          "recipes"
+        ]
+      },
+      "delete": {
+        "operationId": "RecipeController_softDelete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Soft delete a recipe",
+        "tags": [
+          "recipes"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Register a new user",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Login a user",
+        "tags": [
+          "auth"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "API Documentation",
+    "description": "The API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "api",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateRecipeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the recipe"
+          },
+          "ingredients": {
+            "description": "The ingredients of the recipe",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "preparationMethod": {
+            "type": "string",
+            "description": "The preparation method of the recipe"
+          },
+          "image": {
+            "type": "string",
+            "description": "The image of the recipe"
+          },
+          "category": {
+            "type": "number",
+            "description": "The category of the recipe"
+          }
+        },
+        "required": [
+          "name",
+          "ingredients",
+          "preparationMethod",
+          "category"
+        ]
+      },
+      "UpdateRecipeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the recipe"
+          },
+          "ingredients": {
+            "description": "The ingredients of the recipe",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "preparationMethod": {
+            "type": "string",
+            "description": "The preparation method of the recipe"
+          },
+          "image": {
+            "type": "string",
+            "description": "The image of the recipe"
+          },
+          "category": {
+            "type": "number",
+            "description": "The category of the recipe"
+          }
+        }
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "The username of the user",
+            "minLength": 4,
+            "maxLength": 20
+          },
+          "password": {
+            "type": "string",
+            "description": "The password of the user",
+            "minLength": 6
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      }
+    }
+  }
+}

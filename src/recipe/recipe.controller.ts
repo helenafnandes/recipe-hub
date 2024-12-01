@@ -16,13 +16,16 @@ import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../user/user.decorator';
 import { User as UserEntity } from '../user/user.entity';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-@Controller('recipes')
+@ApiTags('recipes')
 @UseGuards(AuthGuard('jwt'))
+@Controller('recipes')
 export class RecipeController {
   constructor(private readonly recipeService: RecipeService) {}
 
   @Get()
+  @ApiOperation({ summary: 'Get all recipes' })
   async findAll(
     @Query('category') category?: number,
     @Query('page') page = 1,
@@ -32,6 +35,7 @@ export class RecipeController {
   }
 
   @Post()
+  @ApiOperation({ summary: 'Create a new recipe' })
   async create(
     @Body() createRecipeDto: CreateRecipeDto,
     @User() user: UserEntity,
@@ -40,6 +44,7 @@ export class RecipeController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update a recipe' })
   async update(
     @Param('id') id: string,
     @Body() updateRecipeDto: UpdateRecipeDto,
@@ -49,6 +54,7 @@ export class RecipeController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Soft delete a recipe' })
   async softDelete(@Param('id') id: string, @User() user: UserEntity): Promise<void> {
     return this.recipeService.softDelete(id, user.id);
   }
