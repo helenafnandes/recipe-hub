@@ -39,8 +39,9 @@ export class RecipeController {
   @ApiOperation({ summary: 'Create a new recipe' })
   async create(
     @Body() createRecipeDto: CreateRecipeDto,
-    @User() user: UserEntity,
+    @User() user: UserEntity, 
   ): Promise<Recipe> {
+    console.log('Usuário autenticado no POST:', user);
     return this.recipeService.create(createRecipeDto, user.id);
   }
 

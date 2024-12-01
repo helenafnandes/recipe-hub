@@ -1,9 +1,11 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { createParamDecorator, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 
 export const User = createParamDecorator(
   (data: keyof Express.User | undefined, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    const user = request.user;
-    return data ? user?.[data] : user; // Retorna o campo especificado ou o objeto completo
+    if (!request.user) {
+      throw new UnauthorizedException('Usuário não autenticado.');
+    }
+    return data ? request.user[data] : request.user;
   },
 );
